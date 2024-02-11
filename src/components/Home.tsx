@@ -72,6 +72,7 @@ function Home() {
                 <button onClick={() => removeCookie(ACCESS_TOKEN_COOKIE_NAME)}>logout</button>
             </div>
             <p>Make sure the sort order of your playlist is set to <span style={{ fontWeight: 'bold' }}>Custom order</span>.</p>
+            <p>NOTE: you can only shuffle playlists you created/own.</p>
             {
                 !isLoadingPlaylists && playlists.length <= 0 &&
                 <p style={{ marginTop: '33px', color: 'orange' }}>
