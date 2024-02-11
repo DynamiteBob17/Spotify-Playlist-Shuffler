@@ -14,6 +14,7 @@ function Home() {
     const [userProfileImageUrl, setUserProfileImageUrl] = useState<string>('https://i.scdn.co/image/ab6761610000e5eb601fb0059594d52f3f7939a9');
     const [playlists, setPlaylists] = useState<IPlaylists>([]);
     const [isShuffling, setIsShuffling] = useState<boolean>(false);
+    const [isLoadingPlaylists, setIsLoadingPlaylists] = useState<boolean>(true);
 
     useEffect(() => {
         (async () => {
@@ -42,6 +43,7 @@ function Home() {
                     next = userPlaylistsResponse.next;
                 }
                 setPlaylists(userPlaylists.filter(playlist => user?.id === playlist.owner.id));
+                setIsLoadingPlaylists(false);
             } catch (err) {
                 console.error(err);
 
@@ -70,17 +72,25 @@ function Home() {
                 <button onClick={() => removeCookie(ACCESS_TOKEN_COOKIE_NAME)}>logout</button>
             </div>
             <p>Make sure the sort order of your playlist is set to <span style={{ fontWeight: 'bold' }}>Custom order</span>.</p>
+            {
+                !isLoadingPlaylists && playlists.length <= 0 &&
+                <p style={{ marginTop: '33px', color: 'orange' }}>
+                    You do not have any <span style={{ fontWeight: 'bold' }}>owned</span> playlists...
+                </p>
+            }
             <div className={'playlists'}>
                 {
-                    playlists.map(playlist => {
-                        return <ShufflePlaylist
-                            playlist={playlist}
-                            isShuffling={isShuffling}
-                            handleStartShuffle={handleStartShuffle}
-                            handleStopShuffle={handleStopShuffle}
-                            key={playlist.id}
-                        />;
-                    })
+                    isLoadingPlaylists ?
+                        <div className={'loader-wrapper'}><div className={'loader'}></div></div>
+                        : playlists.map(playlist => {
+                            return <ShufflePlaylist
+                                playlist={playlist}
+                                isShuffling={isShuffling}
+                                handleStartShuffle={handleStartShuffle}
+                                handleStopShuffle={handleStopShuffle}
+                                key={playlist.id}
+                            />;
+                        })
                 }
             </div>
         </div>
