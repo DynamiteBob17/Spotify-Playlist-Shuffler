@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 .env
+
+# firebase hosting cache
 .firebase
 
 # Editor directories and files

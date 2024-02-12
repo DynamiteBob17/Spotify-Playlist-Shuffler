@@ -11,19 +11,21 @@ type ShufflePlaylistProps = {
     isShuffling: boolean,
     handleStartShuffle: () => void,
     handleStopShuffle: () => void,
+    handleError: (err: unknown, errorMessage: string) => void,
 };
 
 function ShufflePlaylist({
     playlist,
     isShuffling,
     handleStartShuffle,
-    handleStopShuffle
+    handleStopShuffle,
+    handleError
 }: ShufflePlaylistProps) {
     const [progress, setProgress] = useState<number>(0);
     const [isShuffled, setIsShuffled] = useState<boolean>(false);
     const [isShufflingThisPlaylist, setIsShufflingThisPlaylist] = useState<boolean>(false);
     const [playlistImageUrl, setPlaylistImageUrl] = useState<string>('');
-    const [cookies, , removeCookie] = useCookies();
+    const [cookies] = useCookies();
 
     useEffect(() => {
         if (playlist.images && playlist.images.length > 0) {
@@ -63,13 +65,10 @@ function ShufflePlaylist({
                     config.data
                 ));
             } catch (err) {
-                console.error(err);
                 setIsShufflingThisPlaylist(false);
                 handleStopShuffle();
 
-                if (axios.isAxiosError(err) && err.response?.status === 401) {
-                    removeCookie(ACCESS_TOKEN_COOKIE_NAME);
-                }
+                handleError(err, 'failed to shuffle playlist');
 
                 return;
             }
