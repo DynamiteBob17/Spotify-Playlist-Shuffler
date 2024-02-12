@@ -1,6 +1,6 @@
 # About
 - this app allows users to authenticate through Spotify and easily shuffle their playlists (reorders the tracks randomly)
-- **NOTE**: if you want to use this app, contact me so I can add you to it with your email since I currently can't get it out of Development Mode
+- **NOTE**: if you want to use this app, contact me so I can add you to it with your email since I currently can't get it out of Development mode
 - [live demo](https://drive.google.com/file/d/1IGJTde88MLO6wqJ1FMHU_litxIma4dLi/view?usp=drive_link)
 
 # How to use
