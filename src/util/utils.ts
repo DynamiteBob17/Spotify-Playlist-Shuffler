@@ -44,7 +44,7 @@ export function makeApiConfig(
         },
         data
     );
-};
+}
 
 export function makeDirectUrlApiConfig(
     method: string,
@@ -61,21 +61,21 @@ export function makeDirectUrlApiConfig(
         },
         data
     );
-};
+}
+
+export function randInt(bound: number) {
+    return Math.floor(Math.random() * bound);
+}
 
 export function generateRandomString(length: number): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     let result = ' ';
     for (let i = 0; i < length; ++i) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
+        result += characters.charAt(randInt(characters.length));
     }
 
     return result;
-}
-
-export function randInt(bound: number) {
-    return Math.floor(Math.random() * bound);
 }
 
 export function map(val: number, valLow: number, valHigh: number, returnValLow: number, returnValHigh: number) {
