@@ -30,6 +30,7 @@ function Auth() {
             }
             <button onClick={handleLoginClick}>Log in</button>
             <p>through <span style={{ color: '#1db954', fontWeight: 'bold' }}>Spotify</span> to shuffle your playlists.</p>
+            <p className={'disclaimer'}>This app is in <span className={'bolded'}>Development mode.</span> If you want to use it, please contact me at <span className={'bolded'}>jan.mlinaric@gmail.com</span> so I can add you as a user of the app.</p>
         </div>
     );
 }

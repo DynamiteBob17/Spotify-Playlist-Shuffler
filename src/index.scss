@@ -49,3 +49,15 @@ button:disabled {
     cursor: not-allowed;
     border-color: unset;
 }
+
+.disclaimer {
+    font-style: italic;
+    color: gray;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.bolded {
+    font-weight: bold;
+}

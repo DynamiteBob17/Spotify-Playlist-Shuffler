@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
-import { useEffect, useState } from 'react';
-import { ACCESS_TOKEN_COOKIE_NAME } from '../App';
-import { makeApiConfig, makeDirectUrlApiConfig } from '../util/utils';
-import { IPlaylists, IPlaylistsResponse } from '../models/IPlaylist';
+import {useCookies} from 'react-cookie';
+import {useEffect, useState} from 'react';
+import {ACCESS_TOKEN_COOKIE_NAME} from '../App';
+import {makeApiConfig, makeDirectUrlApiConfig} from '../util/utils';
+import {IPlaylists, IPlaylistsResponse} from '../models/IPlaylist';
 import ShufflePlaylist from './ShufflePlaylist';
 import IUser from '../models/IUser';
 import './Home.scss';
@@ -17,13 +17,13 @@ function Home() {
     const [isShuffling, setIsShuffling] = useState<boolean>(false);
     const [isLoadingPlaylists, setIsLoadingPlaylists] = useState<boolean>(true);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    
+
     useEffect(() => {
         (async () => {
             let user: IUser;
-            
+
             try {
-                const { data } = await axios<IUser>(makeApiConfig(
+                const {data} = await axios<IUser>(makeApiConfig(
                     'GET',
                     '/me',
                     cookies[ACCESS_TOKEN_COOKIE_NAME]
@@ -38,13 +38,13 @@ function Home() {
             } catch (err) {
                 handleError(err, 'failed to fetch user data');
             }
-            
+
             try {
                 let next: string | null = import.meta.env.VITE_SPOTIFY_API_ORIGIN + '/me/playlists';
                 let userPlaylists: IPlaylists = [];
                 let userPlaylistsResponse: IPlaylistsResponse;
                 while (next) {
-                    const { data } = await axios<IPlaylistsResponse>(makeDirectUrlApiConfig(
+                    const {data} = await axios<IPlaylistsResponse>(makeDirectUrlApiConfig(
                         'GET',
                         next,
                         cookies[ACCESS_TOKEN_COOKIE_NAME]
@@ -89,31 +89,35 @@ function Home() {
             <div className={'login-info'}>
                 <p>Logged in as {
                     username
-                        ? <span style={{ color: '#1db954' }}>{username}</span>
-                        : <Skeleton style={{ display: 'inline-block', margin: 'auto 5px', alignContent: 'center' }} variant={'rounded'} width={75} height={12} />
+                        ? <span style={{color: '#1db954'}}>{username}</span>
+                        : <Skeleton style={{display: 'inline-block', margin: 'auto 5px', alignContent: 'center'}}
+                                    variant={'rounded'} width={75} height={12}/>
                 }</p>
                 {
                     userProfileImageUrl
-                        ? <img src={userProfileImageUrl} alt={'user profile image'} />
-                        : <Skeleton style={{ marginRight: '5px' }} variant={'circular'} width={32} height={32} />
+                        ? <img src={userProfileImageUrl} alt={'user profile image'}/>
+                        : <Skeleton style={{marginRight: '5px'}} variant={'circular'} width={32} height={32}/>
                 }
                 <button onClick={() => removeCookie(ACCESS_TOKEN_COOKIE_NAME)}>logout</button>
             </div>
-            <p>Make sure the sort order of your playlist is set to <span style={{ fontWeight: 'bold' }}>Custom order</span>.</p>
+            <p>Make sure the sort order of your playlist is set to <span
+                style={{fontWeight: 'bold'}}>Custom order</span>.</p>
             <p>NOTE: you can only shuffle playlists you created/own.</p>
             {
                 !isLoadingPlaylists && playlists.length <= 0 && !errorMsg &&
-                <p style={{ marginTop: '33px', color: 'orange' }}>
-                    You do not have any <span style={{ fontWeight: 'bold' }}>owned</span> playlists...
+                <p style={{marginTop: '33px', color: 'orange'}}>
+                    You do not have any <span style={{fontWeight: 'bold'}}>owned</span> playlists...
                 </p>
             }
             {
-                errorMsg && <p style={{ color: 'red', fontWeight: 'bold' }}>Error: {errorMsg}!</p>
+                errorMsg && <p style={{color: 'red', fontWeight: 'bold'}}>Error: {errorMsg}!</p>
             }
             <div className={'playlists'}>
                 {
                     isLoadingPlaylists ?
-                        <div className={'loader-wrapper'}><div className={'loader'}></div></div>
+                        <div className={'loader-wrapper'}>
+                            <div className={'loader'}></div>
+                        </div>
                         : playlists.map(playlist => {
                             return <ShufflePlaylist
                                 playlist={playlist}
